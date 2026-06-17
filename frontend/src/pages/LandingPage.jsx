@@ -270,20 +270,20 @@ export default function LandingPage() {
   };
 
   return (
-    <div className={`${tokens.shell} transition-colors duration-300 flex flex-col md:flex-row relative`}>
+    <div className={`${tokens.shell} transition-colors duration-300 flex flex-col md:flex-row relative w-full overflow-x-hidden`}>
       {/* Decorative Orbs */}
       <div className="absolute top-0 left-[20%] w-[35rem] h-[35rem] bg-indigo-500/10 rounded-full blur-[130px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[10%] w-[30rem] h-[30rem] bg-purple-500/5 rounded-full blur-[110px] pointer-events-none" />
 
-      {/* Sticky Left Sidebar Navigation */}
-      <aside className={`w-full md:w-64 shrink-0 md:sticky md:top-20 md:h-[calc(100vh-5rem)] p-6 border-b md:border-b-0 md:border-r ${tokens.sidebarBg} transition-colors duration-300 z-20 flex flex-col justify-between`}>
+      {/* Sticky Left Sidebar Navigation - Desktop Only */}
+      <aside className={`hidden md:flex w-64 shrink-0 md:sticky md:top-20 md:h-[calc(100vh-5rem)] p-6 border-r ${tokens.sidebarBg} transition-colors duration-300 z-20 flex-col justify-between`}>
         <div className="space-y-6">
           <div>
             <span className="text-[10px] font-extrabold uppercase text-indigo-400 tracking-wider">Ecosystem Panel</span>
             <h3 className={`text-lg font-black mt-1 ${tokens.textMain}`}>Navigation Console</h3>
           </div>
           
-          <nav className="grid grid-cols-2 gap-2 md:grid-cols-1 md:gap-0 md:space-y-1.5">
+          <nav className="space-y-1.5 flex flex-col">
             {[
               { href: '#journey-explorer', label: 'Journey Explorer', icon: Compass },
               { href: '#scheme-hub', label: 'Govt Schemes Hub', icon: ShieldCheck },
@@ -295,7 +295,7 @@ export default function LandingPage() {
               <a
                 key={idx}
                 href={item.href}
-                className={`flex items-center gap-2.5 md:gap-3 px-3.5 md:px-4 py-2.5 md:py-3 rounded-2xl text-[11px] md:text-xs font-bold transition-all uppercase tracking-wider ${theme === 'dark' ? 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/5' : 'text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/50 border border-transparent'}`}
+                className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-xs font-bold transition-all uppercase tracking-wider ${theme === 'dark' ? 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/5' : 'text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/50 border border-transparent'}`}
               >
                 <item.icon className="h-4.5 w-4.5 text-indigo-400 shrink-0" />
                 <span className="truncate">{item.label}</span>
@@ -309,6 +309,7 @@ export default function LandingPage() {
             <span className="text-[10px] uppercase font-bold text-slate-500">Theme</span>
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              aria-label="Toggle theme mode"
               className={`p-2.5 rounded-xl border flex items-center justify-center transition-all ${tokens.navInactive}`}
             >
               {theme === 'dark' ? <SunMedium className="h-4.5 w-4.5 text-amber-400" /> : <MoonStar className="h-4.5 w-4.5 text-indigo-600" />}
@@ -320,11 +321,100 @@ export default function LandingPage() {
         </div>
       </aside>
 
+      {/* Mobile Drawer Console Sidebar Navigation */}
+      <AnimatePresence>
+        {isConsoleMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsConsoleMenuOpen(false)}
+              className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-40 md:hidden"
+            />
+            {/* Slide-over Menu */}
+            <motion.aside
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className={`fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] p-6 ${tokens.sidebarBg} border-r border-slate-200 dark:border-white/10 z-50 flex flex-col justify-between md:hidden shadow-2xl`}
+            >
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] font-extrabold uppercase text-indigo-400 tracking-wider">Ecosystem Panel</span>
+                    <h3 className={`text-lg font-black mt-1 ${tokens.textMain}`}>Navigation Console</h3>
+                  </div>
+                  <button
+                    onClick={() => setIsConsoleMenuOpen(false)}
+                    aria-label="Close Navigation Console"
+                    className={`p-2 rounded-full border ${tokens.navInactive} flex items-center justify-center`}
+                  >
+                    <X className="h-4.5 w-4.5" />
+                  </button>
+                </div>
+                
+                <nav className="space-y-1.5 flex flex-col">
+                  {[
+                    { href: '#journey-explorer', label: 'Journey Explorer', icon: Compass },
+                    { href: '#scheme-hub', label: 'Govt Schemes Hub', icon: ShieldCheck },
+                    { href: '#scholarship-hub', label: 'Scholarship Finder', icon: Award },
+                    { href: '#internship-hub', label: 'Internships Portal', icon: BriefcaseBusiness },
+                    { href: '#exam-hub', label: 'Entrance Exams Hub', icon: Target },
+                    { href: '#analytics-trends', label: 'Market Analytics', icon: BarChart3 }
+                  ].map((item, idx) => (
+                    <a
+                      key={idx}
+                      href={item.href}
+                      onClick={() => setIsConsoleMenuOpen(false)}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-xs font-bold transition-all uppercase tracking-wider ${theme === 'dark' ? 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/5' : 'text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/50 border border-transparent'}`}
+                    >
+                      <item.icon className="h-4.5 w-4.5 text-indigo-400 shrink-0" />
+                      <span className="truncate">{item.label}</span>
+                    </a>
+                  ))}
+                </nav>
+              </div>
+
+              <div className="pt-6 border-t border-slate-500/10 space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] uppercase font-bold text-slate-500">Theme</span>
+                  <button
+                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                    className={`p-2.5 rounded-xl border flex items-center justify-center transition-all ${tokens.navInactive}`}
+                  >
+                    {theme === 'dark' ? <SunMedium className="h-4.5 w-4.5 text-amber-400" /> : <MoonStar className="h-4.5 w-4.5 text-indigo-600" />}
+                  </button>
+                </div>
+                <div className="text-[10px] text-slate-500 font-semibold leading-relaxed">
+                  CareerSaathi Platform v1.2.0 • Government Opportunity Ledger
+                </div>
+              </div>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+
       {/* Main Viewport */}
-      <main className="flex-1 max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-16 overflow-hidden">
+      <main className="flex-1 w-full max-w-5xl mx-auto px-4 py-6 sm:px-6 lg:px-8 space-y-12 md:space-y-16 overflow-x-hidden">
+        
+        {/* Mobile Console Menu Trigger */}
+        <div className="md:hidden sticky top-20 z-30 flex items-center justify-between px-4 py-3 bg-white/80 dark:bg-[#080C16]/90 border-b border-slate-200/60 dark:border-white/5 backdrop-blur-md -mx-4 sm:-mx-6 -mt-6 mb-6">
+          <button
+            onClick={() => setIsConsoleMenuOpen(true)}
+            className="flex items-center gap-2 px-3 py-2 rounded-xl border border-royal/10 bg-royal/5 dark:border-indigo-500/20 dark:bg-indigo-500/10 text-xs font-bold uppercase tracking-wider text-royal dark:text-indigo-300 transition-all active:scale-95"
+            aria-label="Open Console Navigation"
+          >
+            <Menu className="h-4.5 w-4.5" />
+            <span>Console Menu</span>
+          </button>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-slateSecondary dark:text-slate-400">CareerSaathi Console</span>
+        </div>
         
         {/* HERO SECTION */}
-        <section className="text-center pt-12 pb-14 space-y-8 relative">
+        <section className="text-center pt-6 pb-10 md:pt-12 md:pb-14 space-y-6 md:space-y-8 relative w-full px-2 sm:px-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -335,7 +425,7 @@ export default function LandingPage() {
             <span>Premium Career Intelligence</span>
           </motion.div>
 
-          <h1 className={`text-4xl sm:text-7xl font-bold leading-[1.05] tracking-tight ${tokens.textMain} font-clash`}>
+          <h1 className={`text-3xl sm:text-6xl md:text-7xl font-bold leading-[1.1] md:leading-[1.05] tracking-tight ${tokens.textMain} font-clash`}>
             Navigate Your Future <br/>
             <span className="bg-gradient-to-r from-royal via-indigo-600 to-orangeAccent bg-clip-text text-transparent">With absolute clarity</span>
           </h1>
@@ -345,7 +435,7 @@ export default function LandingPage() {
           </p>
 
           {/* Search bar inside Hero */}
-          <div className="max-w-xl mx-auto relative group">
+          <div className="w-full max-w-xl mx-auto relative group px-2 sm:px-0">
             <div className="absolute inset-0 bg-royal/5 dark:bg-indigo-500/5 rounded-3xl blur-2xl group-hover:bg-royal/10 transition-all pointer-events-none" />
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slateSecondary" />
             <input
@@ -358,7 +448,7 @@ export default function LandingPage() {
           </div>
 
           {/* Metrics Dashboard Widget */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto pt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto pt-6 px-2 sm:px-0">
             {[
               { label: 'Scholarships Available', val: '280+', color: 'text-royal dark:text-indigo-400' },
               { label: 'Government Schemes', val: '140+', color: 'text-orangeAccent' },
@@ -372,10 +462,10 @@ export default function LandingPage() {
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 w-full max-w-md mx-auto pt-4">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 w-full max-w-md mx-auto pt-4 px-2 sm:px-0">
             <a
               href="#journey-explorer"
-              className="glow-btn-primary w-full sm:w-auto px-8 py-3.5 text-xs uppercase tracking-widest font-bold font-satoshi text-center"
+              className="glow-btn-primary w-full sm:w-auto px-8 py-3.5 text-xs uppercase tracking-widest font-bold font-satoshi text-center animate-pulse-slow"
             >
               Explore Roadmaps
             </a>
@@ -402,7 +492,7 @@ export default function LandingPage() {
           </div>
 
           {/* Clickable horizontal roadmap layout */}
-          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin px-1">
+          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin px-1 snap-x snap-mandatory">
             {stages.map((st) => {
               const isActive = activeStage === st.id;
               const accentColor = stageColors[st.id] || 'from-royal to-indigo-505';
@@ -410,7 +500,7 @@ export default function LandingPage() {
                 <button
                   key={st.id}
                   onClick={() => setActiveStage(st.id)}
-                  className={`flex-none w-38 rounded-2xl border p-4 text-left transition-all relative overflow-hidden flex flex-col justify-between ${tokens.surface} ${isActive ? 'ring-2 ring-royal/50 dark:ring-indigo-500/50 border-royal scale-[1.02] shadow-premium' : 'hover:scale-[1.01] hover:border-slate-300 dark:hover:border-white/10'}`}
+                  className={`flex-none w-44 sm:w-48 rounded-2xl border p-4 text-left transition-all relative overflow-hidden flex flex-col justify-between snap-start ${tokens.surface} ${isActive ? 'ring-2 ring-royal/50 dark:ring-indigo-500/50 border-royal scale-[1.02] shadow-premium' : 'hover:scale-[1.01] hover:border-slate-300 dark:hover:border-white/10'}`}
                 >
                   <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${accentColor}`} />
                   <div>
@@ -551,12 +641,12 @@ export default function LandingPage() {
                 {/* 3. Class 9-10 */}
                 {activeStage === 'class-9-10' && (
                   <div className="space-y-6 font-satoshi">
-                    <div className="flex border-b border-slate-200/80 dark:border-white/10 pb-2 gap-6 overflow-x-auto scrollbar-thin">
+                    <div className="flex border-b border-slate-200/80 dark:border-white/10 gap-6 overflow-x-auto scrollbar-none items-center mb-4">
                       {['science', 'commerce', 'arts'].map((tab) => (
                         <button
                           key={tab}
                           onClick={() => setActive9to10Stream(tab)}
-                          className={`font-bold text-xs uppercase pb-2.5 transition-all ${active9to10Stream === tab ? 'text-royal border-b-2 border-royal dark:text-indigo-400 dark:border-indigo-400 font-extrabold' : 'text-slateSecondary hover:text-midnight dark:hover:text-white'}`}
+                          className={`font-bold text-xs uppercase py-3 px-1 border-b-2 transition-all min-h-[44px] shrink-0 ${active9to10Stream === tab ? 'text-royal border-royal dark:text-indigo-400 dark:border-indigo-400 font-extrabold' : 'text-slateSecondary border-transparent hover:text-midnight dark:hover:text-white'}`}
                         >
                           {tab} Stream Dashboard
                         </button>
@@ -603,12 +693,12 @@ export default function LandingPage() {
                 {/* 4. Class 11-12 */}
                 {activeStage === 'class-11-12' && (
                   <div className="space-y-6 font-satoshi">
-                    <div className="flex border-b border-slate-200/80 dark:border-white/10 pb-2 gap-6 overflow-x-auto scrollbar-thin">
+                    <div className="flex border-b border-slate-200/80 dark:border-white/10 gap-6 overflow-x-auto scrollbar-none items-center mb-4">
                       {['science', 'commerce', 'arts'].map((tab) => (
                         <button
                           key={tab}
                           onClick={() => setActive11to12Stream(tab)}
-                          className={`font-bold text-xs uppercase pb-2.5 transition-all ${active11to12Stream === tab ? 'text-royal border-b-2 border-royal dark:text-indigo-400 dark:border-indigo-400 font-extrabold' : 'text-slateSecondary hover:text-midnight dark:hover:text-white'}`}
+                          className={`font-bold text-xs uppercase py-3 px-1 border-b-2 transition-all min-h-[44px] shrink-0 ${active11to12Stream === tab ? 'text-royal border-royal dark:text-indigo-400 dark:border-indigo-400 font-extrabold' : 'text-slateSecondary border-transparent hover:text-midnight dark:hover:text-white'}`}
                         >
                           {tab} Stream
                         </button>
@@ -662,12 +752,12 @@ export default function LandingPage() {
                 {/* 5. Diploma */}
                 {activeStage === 'diploma' && (
                   <div className="space-y-6 font-satoshi">
-                    <div className="flex border-b border-slate-200/80 dark:border-white/10 pb-2 gap-6 overflow-x-auto scrollbar-thin">
+                    <div className="flex border-b border-slate-200/80 dark:border-white/10 gap-6 overflow-x-auto scrollbar-none items-center mb-4">
                       {['polytechnic', 'iti', 'paramedical', 'design', 'agriculture'].map((tab) => (
                         <button
                           key={tab}
                           onClick={() => setActiveDiplomaCategory(tab)}
-                          className={`font-bold text-xs uppercase pb-2.5 transition-all shrink-0 ${activeDiplomaCategory === tab ? 'text-royal border-b-2 border-royal dark:text-indigo-400 dark:border-indigo-400 font-extrabold' : 'text-slateSecondary hover:text-midnight dark:hover:text-white'}`}
+                          className={`font-bold text-xs uppercase py-3 px-1 border-b-2 transition-all min-h-[44px] shrink-0 ${activeDiplomaCategory === tab ? 'text-royal border-royal dark:text-indigo-400 dark:border-indigo-400 font-extrabold' : 'text-slateSecondary border-transparent hover:text-midnight dark:hover:text-white'}`}
                         >
                           {tab} Domain
                         </button>
@@ -729,7 +819,7 @@ export default function LandingPage() {
                     </div>
 
                     {/* Graduation tabs */}
-                    <div className="flex border-b border-slate-200/80 dark:border-white/10 pb-2 gap-4 overflow-x-auto scrollbar-thin">
+                    <div className="flex border-b border-slate-200/80 dark:border-white/10 gap-4 overflow-x-auto scrollbar-none items-center mb-4">
                       {[
                         { id: 'overview', label: 'Overview' },
                         { id: 'schemes', label: 'Govt Schemes' },
@@ -746,7 +836,7 @@ export default function LandingPage() {
                         <button
                           key={tab.id}
                           onClick={() => setActiveGraduationTab(tab.id)}
-                          className={`font-bold text-[11px] uppercase pb-2.5 transition-all shrink-0 ${activeGraduationTab === tab.id ? 'text-royal border-b-2 border-royal dark:text-indigo-400 dark:border-indigo-400 font-extrabold' : 'text-slateSecondary hover:text-midnight dark:hover:text-white'}`}
+                          className={`font-bold text-[11px] uppercase py-3 px-1 border-b-2 transition-all min-h-[44px] shrink-0 ${activeGraduationTab === tab.id ? 'text-royal border-royal dark:text-indigo-400 dark:border-indigo-400 font-extrabold' : 'text-slateSecondary border-transparent hover:text-midnight dark:hover:text-white'}`}
                         >
                           {tab.label}
                         </button>
@@ -799,7 +889,7 @@ export default function LandingPage() {
                     </div>
 
                     {/* PG tabs */}
-                    <div className="flex border-b border-slate-200/80 dark:border-white/10 pb-2 gap-4 overflow-x-auto scrollbar-thin">
+                    <div className="flex border-b border-slate-200/80 dark:border-white/10 gap-4 overflow-x-auto scrollbar-none items-center mb-4">
                       {[
                         { id: 'fellowships', label: 'Research Fellowships' },
                         { id: 'scholarships', label: 'Scholarships' },
@@ -812,7 +902,7 @@ export default function LandingPage() {
                         <button
                           key={tab.id}
                           onClick={() => setActivePGTab(tab.id)}
-                          className={`font-bold text-[11px] uppercase pb-2.5 transition-all shrink-0 ${activePGTab === tab.id ? 'text-royal border-b-2 border-royal dark:text-indigo-400 dark:border-indigo-400 font-extrabold' : 'text-slateSecondary hover:text-midnight dark:hover:text-white'}`}
+                          className={`font-bold text-[11px] uppercase py-3 px-1 border-b-2 transition-all min-h-[44px] shrink-0 ${activePGTab === tab.id ? 'text-royal border-royal dark:text-indigo-400 dark:border-indigo-400 font-extrabold' : 'text-slateSecondary border-transparent hover:text-midnight dark:hover:text-white'}`}
                         >
                           {tab.label}
                         </button>
