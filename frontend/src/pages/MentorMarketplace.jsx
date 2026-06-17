@@ -396,31 +396,31 @@ export default function MentorMarketplace() {
           </p>
 
           {/* Core Analytics Counters */}
-          <div className="flex flex-wrap justify-center gap-4 pt-2">
+          <div className="grid grid-cols-2 md:flex md:flex-wrap md:justify-center gap-3 pt-2 max-w-2xl mx-auto w-full">
             {[
               { label: 'Verified Experts', val: '80+' },
               { label: 'Completed Consultations', val: '12,500+' },
               { label: 'Average Rating', val: '4.92 / 5.0' },
               { label: 'Hourly Bookings', val: '24/7 Live' }
             ].map((cnt, idx) => (
-              <div key={idx} className={`px-4 py-2.5 rounded-2xl border text-center backdrop-blur-md ${theme === 'dark' ? 'bg-white/5 border-white/5' : 'bg-slate-50 border-slate-200'}`}>
-                <span className="text-indigo-400 font-bold block text-sm">{cnt.val}</span>
-                <span className="text-[9px] font-bold text-slate-500 uppercase mt-0.5">{cnt.label}</span>
+              <div key={idx} className={`px-4 py-2.5 rounded-2xl border text-center backdrop-blur-md transition-all ${theme === 'dark' ? 'bg-white/5 border-white/5' : 'bg-slate-50 border-slate-200'}`}>
+                <span className={`font-bold block text-sm ${theme === 'dark' ? 'text-indigo-400' : 'text-royal'}`}>{cnt.val}</span>
+                <span className={`text-[9px] font-bold uppercase mt-0.5 ${theme === 'dark' ? 'text-slate-500' : 'text-slateSecondary'}`}>{cnt.label}</span>
               </div>
             ))}
           </div>
 
           {/* Action CTAs */}
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 w-full max-w-md mx-auto">
             <button 
               onClick={() => setActiveTab('discover')}
-              className="glow-btn-primary px-6 py-3 text-xs uppercase tracking-wider font-extrabold"
+              className="glow-btn-primary w-full sm:w-auto px-6 py-3 text-xs uppercase tracking-wider font-extrabold"
             >
               Book 1-on-1 Session
             </button>
             <button 
               onClick={() => setActiveTab('meet')}
-              className="glow-btn-accent px-6 py-3 text-xs uppercase tracking-wider font-extrabold flex items-center gap-1.5"
+              className="glow-btn-accent w-full sm:w-auto px-6 py-3 text-xs uppercase tracking-wider font-extrabold flex items-center justify-center gap-1.5"
             >
               <Video className="h-4 w-4" />
               <span>Join Live Meeting Room</span>
@@ -477,7 +477,7 @@ export default function MentorMarketplace() {
                   </button>
                 </div>
 
-                <div className="grid gap-3 grid-cols-2 sm:grid-cols-5">
+                <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-5">
                   <div>
                     <label className={`block text-[8px] font-bold uppercase mb-1 ${theme === 'dark' ? 'text-slate-500' : 'text-slateSecondary'}`}>Academic Level</label>
                     <select
@@ -735,9 +735,9 @@ export default function MentorMarketplace() {
                       key={match.id}
                       initial={{ opacity: 0, x: 15 }}
                       animate={{ opacity: 1, x: 0 }}
-                      className={`p-5 rounded-2xl border flex items-center justify-between ${tokens.surface}`}
+                      className={`p-5 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all ${tokens.surface}`}
                     >
-                      <div className="space-y-2 flex-grow">
+                      <div className="space-y-2 flex-grow text-left">
                         <div className="flex items-center gap-2">
                           <span className={`text-[9px] font-extrabold px-2 py-0.5 rounded border ${theme === 'dark' ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' : 'text-emerald-600 bg-emerald-500/10 border-emerald-500/20'}`}>
                             {match.matchPercentage}% Match Score
@@ -992,7 +992,7 @@ export default function MentorMarketplace() {
                   </h3>
                   <p className={`text-xs ${theme === 'dark' ? 'text-slate-400' : 'text-slateSecondary'}`}>Target structured syllabus, rounds patterns, and previous questions for technology organizations:</p>
                   
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {['Google', 'Microsoft', 'Amazon', 'Accenture', 'Infosys', 'TCS', 'Wipro', 'Capgemini'].map((corp) => (
                       <button
                         key={corp}
@@ -1017,7 +1017,7 @@ export default function MentorMarketplace() {
                   </h3>
                   <p className={`text-xs ${theme === 'dark' ? 'text-slate-400' : 'text-slateSecondary'}`}>Study optional roadmaps, previous mock patterns, and interview question pools:</p>
                   
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {['UPSC Civil', 'SSC CGL', 'Banking PO', 'Railway NTPC', 'Defence NDA', 'State PSC', 'Judiciary', 'Teaching TET'].map((gov) => (
                       <button
                         key={gov}
