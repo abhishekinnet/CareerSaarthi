@@ -1,8 +1,12 @@
 import axios from 'axios';
 
 const getBaseURL = () => {
-  if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
+  let url = import.meta.env.VITE_API_URL;
+  if (url) {
+    if (!url.endsWith('/api') && !url.endsWith('/api/')) {
+      url = url.endsWith('/') ? `${url}api` : `${url}/api`;
+    }
+    return url;
   }
   // Default fallback for production / local development
   return import.meta.env.PROD
