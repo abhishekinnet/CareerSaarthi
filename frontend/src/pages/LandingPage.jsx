@@ -111,6 +111,7 @@ export default function LandingPage() {
   const [theme, setTheme] = useState(() => localStorage.getItem('careerExplorerTheme') || 'light');
   const [activeStage, setActiveStage] = useState('class-9-10');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isConsoleMenuOpen, setIsConsoleMenuOpen] = useState(false);
   
   // Stages sub-state selectors
   const [active9to10Stream, setActive9to10Stream] = useState('science');
