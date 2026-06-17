@@ -283,7 +283,7 @@ export default function LandingPage() {
             <h3 className={`text-lg font-black mt-1 ${tokens.textMain}`}>Navigation Console</h3>
           </div>
           
-          <nav className="space-y-1.5">
+          <nav className="grid grid-cols-2 gap-2 md:grid-cols-1 md:gap-0 md:space-y-1.5">
             {[
               { href: '#journey-explorer', label: 'Journey Explorer', icon: Compass },
               { href: '#scheme-hub', label: 'Govt Schemes Hub', icon: ShieldCheck },
@@ -295,10 +295,10 @@ export default function LandingPage() {
               <a
                 key={idx}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-xs font-bold transition-all uppercase tracking-wider ${theme === 'dark' ? 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/5' : 'text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/50 border border-transparent'}`}
+                className={`flex items-center gap-2.5 md:gap-3 px-3.5 md:px-4 py-2.5 md:py-3 rounded-2xl text-[11px] md:text-xs font-bold transition-all uppercase tracking-wider ${theme === 'dark' ? 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/5' : 'text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/50 border border-transparent'}`}
               >
-                <item.icon className="h-4.5 w-4.5 text-indigo-400" />
-                <span>{item.label}</span>
+                <item.icon className="h-4.5 w-4.5 text-indigo-400 shrink-0" />
+                <span className="truncate">{item.label}</span>
               </a>
             ))}
           </nav>
@@ -372,16 +372,16 @@ export default function LandingPage() {
             ))}
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 w-full max-w-md mx-auto pt-4">
             <a
               href="#journey-explorer"
-              className="glow-btn-primary px-8 py-3.5 text-xs uppercase tracking-widest font-bold font-satoshi"
+              className="glow-btn-primary w-full sm:w-auto px-8 py-3.5 text-xs uppercase tracking-widest font-bold font-satoshi text-center"
             >
               Explore Roadmaps
             </a>
             <button
               onClick={() => setShowAiWidget(true)}
-              className={`px-8 py-3.5 rounded-2xl border text-xs uppercase tracking-widest font-bold flex items-center gap-2 transition-all shadow-premium hover:scale-[1.01] ${tokens.navInactive} font-satoshi`}
+              className={`w-full sm:w-auto px-8 py-3.5 rounded-2xl border text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 transition-all shadow-premium hover:scale-[1.01] ${tokens.navInactive} font-satoshi`}
             >
               <BrainCircuit className="h-4 w-4 text-royal dark:text-indigo-400" />
               <span>Ask AI Counselor</span>
@@ -902,7 +902,7 @@ export default function LandingPage() {
           </div>
 
           {/* Scheme Filters Grid */}
-          <div className={`p-5 rounded-3xl border grid gap-4 grid-cols-2 sm:grid-cols-4 ${tokens.surface} shadow-sm font-satoshi`}>
+          <div className={`p-5 rounded-3xl border grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 ${tokens.surface} shadow-sm font-satoshi`}>
             <div>
               <label className="block text-[9px] font-bold text-slateSecondary uppercase mb-1.5 tracking-wider">Education Stage</label>
               <select
@@ -1110,7 +1110,7 @@ export default function LandingPage() {
           </div>
 
           {/* Scholarship Filters Grid */}
-          <div className={`p-5 rounded-3xl border grid gap-4 grid-cols-2 sm:grid-cols-3 ${tokens.surface} shadow-sm font-satoshi`}>
+          <div className={`p-5 rounded-3xl border grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 ${tokens.surface} shadow-sm font-satoshi`}>
             <div>
               <label className="block text-[9px] font-bold text-slateSecondary uppercase mb-1.5 tracking-wider">Milestone Stage</label>
               <select
@@ -1263,8 +1263,8 @@ export default function LandingPage() {
           </div>
 
           {/* Internship Filters */}
-          <div className={`p-5 rounded-3xl border flex flex-wrap gap-4 ${tokens.surface}`}>
-            <div className="w-44">
+          <div className={`p-5 rounded-3xl border flex flex-col sm:flex-row gap-4 ${tokens.surface}`}>
+            <div className="w-full sm:w-44">
               <label className="block text-[9px] font-bold text-slate-500 uppercase mb-1">Work Mode</label>
               <select
                 value={internshipFilters.type}
@@ -1278,7 +1278,7 @@ export default function LandingPage() {
               </select>
             </div>
 
-            <div className="w-44">
+            <div className="w-full sm:w-44">
               <label className="block text-[9px] font-bold text-slate-500 uppercase mb-1">Corporate Sector</label>
               <select
                 value={internshipFilters.category}
@@ -1569,7 +1569,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, scale: 0.9, y: 50 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 50 }}
-              className={`rounded-3xl border p-5 w-80 md:w-[26rem] flex flex-col justify-between backdrop-blur-2xl ${theme === 'dark' ? 'bg-slate-950/95 border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.85)] text-white' : 'bg-white/95 border-slate-200/80 shadow-premium text-midnight'}`}
+              className={`rounded-3xl border p-5 w-[calc(100vw-2rem)] sm:w-80 md:w-[26rem] flex flex-col justify-between backdrop-blur-2xl ${theme === 'dark' ? 'bg-slate-950/95 border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.85)] text-white' : 'bg-white/95 border-slate-200/80 shadow-premium text-midnight'}`}
             >
               {/* Chat Header */}
               <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-500/10 pb-3 mb-3 font-satoshi">
