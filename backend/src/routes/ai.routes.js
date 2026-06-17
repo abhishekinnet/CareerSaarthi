@@ -1,11 +1,10 @@
-const express = require('require'); // wait, standard syntax
-const expressMod = require('express');
+const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const { predictCareer, analyzeResume, startMockInterview, submitInterviewAnswer } = require('../controllers/ai.controller');
 const { protect } = require('../middleware/auth');
 
-const router = expressMod.Router();
+const router = express.Router();
 
 // Multer Config
 const storage = multer.diskStorage({
