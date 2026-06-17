@@ -50,7 +50,8 @@ import {
   Info as InfoIcon,
   ChevronDown,
   BarChart3,
-  Rocket
+  Rocket,
+  Menu
 } from 'lucide-react';
 import {
   stages,
