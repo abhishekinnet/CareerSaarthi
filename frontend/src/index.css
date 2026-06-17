@@ -1,0 +1,110 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=clash-display@600&f[]=general-sans@400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  * {
+    @apply border-slate-200 dark:border-slate-800/80;
+  }
+
+  ::selection {
+    background: rgba(79, 70, 229, 0.15);
+    color: #4F46E5;
+  }
+
+  body,
+  html {
+    @apply antialiased transition-colors duration-300;
+  }
+
+  body {
+    background-color: #FAFAF9; /* Soft Ivory */
+    color: #0F172A; /* Midnight Navy */
+    font-family: 'General Sans', 'Inter', system-ui, sans-serif;
+  }
+
+  /* When document has dark mode class */
+  .dark body {
+    background-color: #080C16;
+    color: #FAFAF9;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Clash Display', 'General Sans', 'Inter', sans-serif;
+    @apply tracking-tight font-semibold text-midnight dark:text-white;
+  }
+}
+
+/* Premium Custom Components */
+@layer components {
+  .page-shell {
+    @apply relative overflow-hidden;
+  }
+
+  .page-shell::before {
+    content: '';
+    @apply pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.05];
+    background-image: linear-gradient(rgba(15, 23, 42, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.1) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(circle at center, black, transparent 85%);
+  }
+
+  .section-chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-royal/10 bg-royal/5 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-royal backdrop-blur-md dark:border-indigo-400/20 dark:bg-indigo-500/10 dark:text-indigo-300;
+  }
+
+  .glass-card {
+    @apply rounded-3xl border border-slate-200/60 bg-white/70 shadow-premium backdrop-blur-xl transition-all duration-300 dark:border-white/10 dark:bg-slate-900/40 dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
+  }
+  
+  .glass-panel {
+    @apply border-b border-slate-200/60 bg-white/75 backdrop-blur-2xl dark:border-white/10 dark:bg-slate-950/60;
+  }
+
+  .glow-btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-2xl bg-royal px-5 py-3 font-semibold text-white shadow-premium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(79,70,229,0.25)] hover:bg-royal/95 active:translate-y-0 dark:bg-indigo-600 dark:hover:bg-indigo-500;
+  }
+
+  .glow-btn-accent {
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-r from-orangeAccent to-orange-600 px-5 py-3 font-semibold text-white shadow-premium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(249,115,22,0.25)] active:translate-y-0;
+  }
+  
+  .input-field {
+    @apply w-full rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-midnight placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-royal focus:ring-2 focus:ring-royal/10 dark:border-white/10 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-indigo-500 dark:focus:ring-indigo-500/25;
+  }
+
+  .hero-orb {
+    @apply absolute rounded-full blur-[120px] pointer-events-none;
+  }
+
+  .metric-card {
+    @apply glass-card p-5 hover:border-royal/20 dark:hover:border-indigo-500/30;
+  }
+
+  .nav-link {
+    @apply rounded-full px-4 py-2 text-sm font-medium text-slateSecondary transition-colors hover:bg-slate-100 hover:text-midnight dark:text-slate-300 dark:hover:bg-white/5 dark:hover:text-white;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-ivory dark:bg-[#080C16];
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4F46E5, #F97316);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #6366f1, #fb923c);
+}

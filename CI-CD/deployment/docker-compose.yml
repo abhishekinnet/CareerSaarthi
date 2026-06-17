@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  database:
+    image: mongo:6.0
+    container_name: careersaathi_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - careersaathi_network
+
+  backend:
+    build:
+      context: ../../backend
+      dockerfile: ../CI-CD/deployment/Dockerfile.backend
+    container_name: careersaathi_api
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://database:27017/careersaathi
+      - JWT_SECRET=production_docker_secret_key_needs_rotation
+      - PORT=5000
+    depends_on:
+      - database
+    networks:
+      - careersaathi_network
+
+  frontend:
+    build:
+      context: ../../frontend
+      dockerfile: ../CI-CD/deployment/Dockerfile.frontend
+    container_name: careersaathi_web
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - careersaathi_network
+
+volumes:
+  mongo_data:
+
+networks:
+  careersaathi_network:
+    driver: bridge
