@@ -68,6 +68,7 @@ import {
   exams,
   mockAiResponses,
 } from '../data/opportunityData';
+import heroIllustration from '../assets/hero-illustration.jpg';
 
 // Color tokens for Stage Bubbles
 const stageColors = {
@@ -402,8 +403,19 @@ export default function LandingPage() {
       {/* Main Viewport */}
       <main className="flex-1 w-full max-w-5xl mx-auto px-4 py-6 sm:px-6 lg:px-8 space-y-12 md:space-y-16 overflow-x-hidden">
         
+        {/* Mobile Banner Image */}
+        <div className="block md:hidden w-full -mx-4 sm:-mx-6 -mt-6">
+          <div className="relative overflow-hidden border-b border-slate-200/60 dark:border-white/5 shadow-premium">
+            <img 
+              src={heroIllustration} 
+              alt="CareerSaathi Banner" 
+              className="w-full h-auto object-cover" 
+            />
+          </div>
+        </div>
+
         {/* Mobile Console Menu Trigger */}
-        <div className="md:hidden sticky top-20 z-30 flex items-center justify-between px-4 py-3 bg-white/80 dark:bg-[#080C16]/90 border-b border-slate-200/60 dark:border-white/5 backdrop-blur-md -mx-4 sm:-mx-6 -mt-6 mb-6">
+        <div className="md:hidden sticky top-20 z-30 flex items-center justify-between px-4 py-3 bg-white/80 dark:bg-[#080C16]/90 border-b border-slate-200/60 dark:border-white/5 backdrop-blur-md -mx-4 sm:-mx-6 !mt-4 mb-6">
           <button
             onClick={() => setIsConsoleMenuOpen(true)}
             className="flex items-center gap-2 px-3 py-2 rounded-xl border border-royal/10 bg-royal/5 dark:border-indigo-500/20 dark:bg-indigo-500/10 text-xs font-bold uppercase tracking-wider text-royal dark:text-indigo-300 transition-all active:scale-95"
@@ -478,6 +490,18 @@ export default function LandingPage() {
               <BrainCircuit className="h-4 w-4 text-royal dark:text-indigo-400" />
               <span>Ask AI Counselor</span>
             </button>
+          </div>
+
+          {/* Hero Illustration - Desktop & Tablet */}
+          <div className="hidden md:block w-full max-w-4xl mx-auto pt-8">
+            <div className="relative rounded-3xl border border-slate-200/80 dark:border-white/10 overflow-hidden shadow-premium dark:shadow-glass group">
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 to-transparent pointer-events-none z-10" />
+              <img 
+                src={heroIllustration} 
+                alt="CareerSaathi Platform Overview" 
+                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]"
+              />
+            </div>
           </div>
         </section>
 
